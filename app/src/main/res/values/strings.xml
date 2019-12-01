@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">LiteChatter</string>
+    <string name="click_on_the_boxes_and_play">Click on the boxes and play.</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="splash_text">Join millions of other users using <font color="#15B3E3">LiteChatter</font> to stay in contact with their loved ones.</string>
+    <string name="display_name">Display Name</string>
+</resources>
