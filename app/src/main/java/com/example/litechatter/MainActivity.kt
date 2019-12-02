@@ -10,7 +10,11 @@ import android.widget.TableLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.example.litechatter.databinding.ActivityMainBinding
 import com.google.android.material.tabs.TabLayout
@@ -31,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         viewPager = binding.viewPager
         tabLayout = binding.tabLayout
 
-        viewPager.adapter = PagerAdapter()
+        viewPager.adapter = PagerAdapter2(supportFragmentManager, lifecycle)
 
         TabLayoutMediator(tabLayout, viewPager,
             TabLayoutMediator.TabConfigurationStrategy { tab, position ->
@@ -61,4 +65,16 @@ class PagerAdapter: RecyclerView.Adapter<PagerAdapter.EventViewHolder>() {
     }
 
     override fun getItemCount() = eventList.count()
+}
+
+class PagerAdapter2(fm: FragmentManager, lc: Lifecycle) : FragmentStateAdapter(fm, lc) {
+
+    override fun getItemCount(): Int = 4
+
+    override fun createFragment(position: Int): Fragment {
+        // Return a NEW fragment instance in createFragment(int)
+        val fragment = ChatsFragment()
+
+        return fragment
+    }
 }
