@@ -1,4 +1,4 @@
-package com.example.litechatter
+package com.example.litechatter.screens.chats
 
 
 import android.os.Bundle
@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.litechatter.R
 import com.example.litechatter.databinding.FragmentChatsBinding
 
 class ChatsFragment : Fragment() {
@@ -23,7 +24,8 @@ class ChatsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = DataBindingUtil.inflate<FragmentChatsBinding>(inflater, R.layout.fragment_chats, container, false)
+        val binding = DataBindingUtil.inflate<FragmentChatsBinding>(inflater,
+            R.layout.fragment_chats, container, false)
 
         chatsManager = LinearLayoutManager(this.context)
         chatsAdapter = ChatsAdapter(chatsDataSet)
@@ -65,7 +67,7 @@ class ChatsAdapter(private val myDataset: Array<String>): RecyclerView.Adapter<C
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        holder.view.findViewById<TextView>(R.id.textView).text = myDataset[position]
+        holder.view.findViewById<TextView>(R.id.userName).text = myDataset[position]
     }
 
     // Return the size of your dataset (invoked by the layout manager)

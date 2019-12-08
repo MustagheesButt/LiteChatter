@@ -1,4 +1,4 @@
-package com.example.litechatter
+package com.example.litechatter.screens.login
 
 
 import android.os.Bundle
@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
+import com.example.litechatter.R
 import com.example.litechatter.databinding.FragmentLoginBinding
 
 class LoginFragment : Fragment() {
@@ -18,7 +19,8 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val binding = DataBindingUtil.inflate<FragmentLoginBinding>(inflater, R.layout.fragment_login, container, false)
+        val binding = DataBindingUtil.inflate<FragmentLoginBinding>(inflater,
+            R.layout.fragment_login, container, false)
 
         binding.loginBtn.setOnClickListener {
             if (binding.email.text.toString().equals("gcc@yahoo.com") and binding.password.text.toString().equals("1234")) {

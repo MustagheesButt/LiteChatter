@@ -1,7 +1,5 @@
-package com.example.litechatter
+package com.example.litechatter.screens.splashscreen
 
-import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
+import com.example.litechatter.R
 import com.example.litechatter.databinding.FragmentSplashScreenBinding
 
 class SplashScreenFragment : Fragment() {
@@ -22,7 +21,8 @@ class SplashScreenFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val binding = DataBindingUtil.inflate<FragmentSplashScreenBinding>(inflater, R.layout.fragment_splash_screen, container, false)
+        val binding = DataBindingUtil.inflate<FragmentSplashScreenBinding>(inflater,
+            R.layout.fragment_splash_screen, container, false)
 
         binding.loginBtn.setOnClickListener {
             it.findNavController().navigate(R.id.action_splashScreenFragment_to_loginFragment)
