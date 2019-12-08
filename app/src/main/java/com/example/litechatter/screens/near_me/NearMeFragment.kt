@@ -1,4 +1,4 @@
-package com.example.litechatter.screens.chats
+package com.example.litechatter.screens.near_me
 
 
 import android.os.Bundle
@@ -10,32 +10,34 @@ import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+
 import com.example.litechatter.R
-import com.example.litechatter.databinding.FragmentChatsBinding
+import com.example.litechatter.databinding.FragmentNearMeBinding
 
-class ChatsFragment : Fragment() {
-    private lateinit var chatsRecycler: RecyclerView
-    private lateinit var chatsAdapter: RecyclerView.Adapter<*>
-    private lateinit var chatsManager: RecyclerView.LayoutManager
+class NearMeFragment : Fragment() {
 
-    private val chatsDataSet: Array<String> = arrayOf("John Doe", "Omar", "Mr. X")
+    private lateinit var nearMeRecycler: RecyclerView
+    private lateinit var nearMeAdapter: RecyclerView.Adapter<*>
+    private lateinit var nearMeManager: RecyclerView.LayoutManager
+
+    private val nearMeDataSet: Array<String> = arrayOf("John Doe", "Omar", "Mr. X")
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = DataBindingUtil.inflate<FragmentChatsBinding>(inflater,
-            R.layout.fragment_chats, container, false)
+        val binding = DataBindingUtil.inflate<FragmentNearMeBinding>(inflater,
+            R.layout.fragment_near_me, container, false)
 
-        chatsManager = LinearLayoutManager(this.context)
-        chatsAdapter = ChatsAdapter(chatsDataSet)
+        nearMeManager = LinearLayoutManager(this.context)
+        nearMeAdapter = NearMeAdapter(nearMeDataSet)
 
-        chatsRecycler = binding.chatsRecyclerView.apply {
+        nearMeRecycler = binding.nearMeRecyclerView.apply {
             setHasFixedSize(true)
 
-            layoutManager = chatsManager
+            layoutManager = nearMeManager
 
-            adapter = chatsAdapter
+            adapter = nearMeAdapter
         }
 
         // Inflate the layout for this fragment
@@ -43,7 +45,7 @@ class ChatsFragment : Fragment() {
     }
 }
 
-class ChatsAdapter(private val myDataset: Array<String>): RecyclerView.Adapter<ChatsAdapter.MyViewHolder>() {
+class NearMeAdapter(private val myDataset: Array<String>): RecyclerView.Adapter<NearMeAdapter.MyViewHolder>() {
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -57,7 +59,7 @@ class ChatsAdapter(private val myDataset: Array<String>): RecyclerView.Adapter<C
                                     viewType: Int): MyViewHolder {
         // create a new view
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.chats_listitem_view, parent, false)
+            .inflate(R.layout.near_me_listitem_view, parent, false)
         // set the view's size, margins, paddings and layout parameters
 
         return MyViewHolder(view)
@@ -73,4 +75,3 @@ class ChatsAdapter(private val myDataset: Array<String>): RecyclerView.Adapter<C
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = myDataset.size
 }
-

@@ -10,14 +10,16 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.example.litechatter.databinding.ActivityMainBinding
 import com.example.litechatter.screens.chats.ChatsFragment
+import com.example.litechatter.screens.contacts.ContactsFragment
+import com.example.litechatter.screens.near_me.NearMeFragment
 import com.example.litechatter.screens.settings.SettingsFragment
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
 val fragmentsList: List<Fragment> = listOf(
     ChatsFragment(),
-    ChatsFragment(),
-    ChatsFragment(),
+    ContactsFragment(),
+    NearMeFragment(),
     SettingsFragment()
 )
 val fragmentsTitleList: List<String> = listOf("Chats", "Contacts", "Near Me", "Settings")
