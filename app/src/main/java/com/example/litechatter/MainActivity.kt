@@ -30,7 +30,6 @@ class MainActivity : AppCompatActivity() {
     //private lateinit var pagerAdapter: PagerAdapter
     private lateinit var tabLayout: TabLayout
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
