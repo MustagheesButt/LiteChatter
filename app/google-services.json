@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "854421310812",
+    "firebase_url": "https://litechatter.firebaseio.com",
+    "project_id": "litechatter",
+    "storage_bucket": "litechatter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:854421310812:android:05ca6c07c7370dcad74599",
+        "android_client_info": {
+          "package_name": "com.example.litechatter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "854421310812-v7vtk36kuq3fbemmdnnkk61ecpiaejhk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.litechatter",
+            "certificate_hash": "f2a1f567d66f3a54786940b8301ebd2ecaff7109"
+          }
+        },
+        {
+          "client_id": "854421310812-c3qc2eus85c0c8ek99sqpn2sfvmffior.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAq3LGz9CyWjk8s4T0Iikg84Y_uA-IjieM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "854421310812-c3qc2eus85c0c8ek99sqpn2sfvmffior.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
