@@ -13,31 +13,26 @@ import com.example.litechatter.databinding.FragmentSplashScreenBinding
 
 class SplashScreenFragment : Fragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val binding = DataBindingUtil.inflate<FragmentSplashScreenBinding>(inflater,
-            R.layout.fragment_splash_screen, container, false)
+        val binding = FragmentSplashScreenBinding.inflate(inflater)
 
-        binding.loginBtn.setOnClickListener {
-            it.findNavController().navigate(R.id.action_splashScreenFragment_to_loginFragment)
-        }
-
-        binding.signupBtn.setOnClickListener {
-            it.findNavController().navigate(R.id.action_splashScreenFragment_to_registerFragment)
-        }
-
-        // if user is not logged in, display the login/signup buttons
-        if (true) {
-            binding.loginBtn.visibility = View.VISIBLE
-            binding.signupBtn.visibility = View.VISIBLE
-        }
+//        binding.loginBtn.setOnClickListener {
+//            it.findNavController().navigate(R.id.action_splashScreenFragment_to_loginFragment)
+//        }
+//
+//        binding.signupBtn.setOnClickListener {
+//            it.findNavController().navigate(R.id.action_splashScreenFragment_to_registerFragment)
+//        }
+//
+//        // if user is not logged in, display the login/signup buttons
+//        if (true) {
+//            binding.loginBtn.visibility = View.VISIBLE
+//            binding.signupBtn.visibility = View.VISIBLE
+//        }
 
         return binding.root
     }
