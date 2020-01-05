@@ -27,7 +27,6 @@ val fragmentsTitleList: List<String> = listOf("Chats", "Contacts", "Near Me", "S
 class MainActivity : AppCompatActivity() {
 
     private lateinit var viewPager: ViewPager2
-    //private lateinit var pagerAdapter: PagerAdapter
     private lateinit var tabLayout: TabLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,27 +47,6 @@ class MainActivity : AppCompatActivity() {
         ).attach()
     }
 }
-
-//class PagerAdapter: RecyclerView.Adapter<PagerAdapter.EventViewHolder>() {
-//    val eventList = listOf("0", "1", "2")
-//
-//    class EventViewHolder(val view: View) : RecyclerView.ViewHolder(view)
-//
-//    // Layout "layout_viewpager2_cell.xml" will be defined later
-//    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-//        EventViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.layout_viewpager2_cell, parent, false))
-//
-//    override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
-//        (holder.view as? TextView)?.also{
-//            it.text = "Page " + eventList.get(position)
-//
-//            val backgroundColorResId = if (position % 2 == 0) R.color.colorPrimary else R.color.colorAccent
-//            it.setBackgroundColor(ContextCompat.getColor(it.context, backgroundColorResId))
-//        }
-//    }
-//
-//    override fun getItemCount() = eventList.count()
-//}
 
 class PagerAdapter(fm: FragmentManager, lc: Lifecycle) : FragmentStateAdapter(fm, lc) {
 

@@ -8,7 +8,6 @@ import timber.log.Timber
 
 class SplashScreenViewModel: ViewModel() {
 
-
     private val _navigateToMainActivity = MutableLiveData<Boolean>()
     val navigateToMainActivity: LiveData<Boolean>
         get() = _navigateToMainActivity
@@ -23,6 +22,10 @@ class SplashScreenViewModel: ViewModel() {
 
     fun onSigninProcessCompleted() {
         _startSigninProcess.value = false
+    }
+
+    fun onSigninSuccessfull() {
+        _navigateToMainActivity.value = true
     }
 
     init {
