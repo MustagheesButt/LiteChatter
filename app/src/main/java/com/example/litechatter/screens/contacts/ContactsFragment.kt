@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 import com.example.litechatter.R
+import com.example.litechatter.databinding.FragmentContactsBinding
 import com.example.litechatter.databinding.FragmentNearMeBinding
 
 class ContactsFragment : Fragment() {
@@ -26,15 +27,12 @@ class ContactsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = DataBindingUtil.inflate<FragmentNearMeBinding>(
-            inflater,
-            R.layout.fragment_near_me, container, false
-        )
+        val binding = DataBindingUtil.inflate<FragmentContactsBinding>(inflater, R.layout.fragment_contacts, container, false)
 
         contactsManager = LinearLayoutManager(this.context)
         contactsAdapter = ContactsAdapter(contactsDataSet)
 
-        contactsRecycler = binding.nearMeRecyclerView.apply {
+        contactsRecycler = binding.contactsRecyclerView.apply {
             setHasFixedSize(true)
 
             layoutManager = contactsManager

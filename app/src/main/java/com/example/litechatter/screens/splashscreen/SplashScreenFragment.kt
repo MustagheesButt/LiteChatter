@@ -12,11 +12,13 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.example.litechatter.R
 import com.example.litechatter.databinding.FragmentSplashScreenBinding
+import com.example.litechatter.showSnackbar
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.IdpResponse
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import timber.log.Timber
 
 class SplashScreenFragment : Fragment() {
@@ -50,12 +52,6 @@ class SplashScreenFragment : Fragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-
-    }
-
     fun startSigninProcess() {
         startActivityForResult( // Get an instance of AuthUI based on the default app
             AuthUI.getInstance()
@@ -67,6 +63,7 @@ class SplashScreenFragment : Fragment() {
                     )
                 )
                 .setLogo(R.drawable.logo)
+                .setTheme(R.style.Theme_AppCompat_Light_NoActionBar)
                 .build(),
             RC_SIGN_IN
         )
@@ -74,16 +71,39 @@ class SplashScreenFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        Timber.i("Fragment received result")
+
         if (requestCode == RC_SIGN_IN) {
             val response = IdpResponse.fromResultIntent(data)
 
             if (resultCode == Activity.RESULT_OK) { // Successfully signed in
+                val user = FirebaseAuth.getInstance().currentUser
+
+                // check if user is newly registered
+                if (response!!.isNewUser) {
+                    showSnackbar(activity!!.findViewById(R.id.splashScreenContainer), "Newly registered user")
+
+                    val db = FirebaseFirestore.getInstance()
+                    val userMap = hashMapOf(
+                        "userName" to user!!.displayName
+                    )
+
+                    // store id of newly registered user in database (Firestore)
+                    db.collection("Users")
+                        .document(user.uid)
+                        .set(userMap)
+                        .addOnSuccessListener {
+                            Timber.d("DocumentSnapshot added")
+                        }
+                        .addOnFailureListener { e ->
+                            Timber.w("Error adding document", e)
+                        }
+                }
+
                 Timber.i("Signed-in successfully")
                 viewModel.onSigninSuccessfull()
             } else { // Sign in failed
                 if (response == null) { // User pressed back button
-                    Snackbar.make(activity!!.findViewById(R.id.splashScreenContainer),"Sign-in cancelled", Snackbar.LENGTH_SHORT).show()
+                    showSnackbar(activity!!.findViewById(R.id.splashScreenContainer),"Sign-in cancelled")
                     return
                 }
                 if (response.error!!.errorCode == ErrorCodes.NO_NETWORK) {

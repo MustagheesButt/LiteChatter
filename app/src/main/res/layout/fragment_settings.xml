@@ -40,15 +40,15 @@
 
         <ImageView
             android:id="@+id/profilePhoto"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             android:layout_marginTop="16dp"
+            android:contentDescription="@string/profile_photo"
+            app:imgUrl="@{viewModel.userData.photoUrl.toString()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/displayName"
-            app:imgUrl="@{viewModel.userData.photoUrl.toString()}"
-            tools:srcCompat="@tools:sample/avatars"
-            android:contentDescription="@string/profile_photo" />
+            tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
             android:id="@+id/accountSettings"

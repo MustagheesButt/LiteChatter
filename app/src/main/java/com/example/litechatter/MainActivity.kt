@@ -6,6 +6,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.example.litechatter.databinding.ActivityMainBinding
@@ -16,12 +17,6 @@ import com.example.litechatter.screens.settings.SettingsFragment
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
-val fragmentsList: List<Fragment> = listOf(
-    ChatsFragment(),
-    ContactsFragment(),
-    NearMeFragment(),
-    SettingsFragment()
-)
 val fragmentsTitleList: List<String> = listOf("Chats", "Contacts", "Near Me", "Settings")
 
 class MainActivity : AppCompatActivity() {
@@ -54,8 +49,12 @@ class PagerAdapter(fm: FragmentManager, lc: Lifecycle) : FragmentStateAdapter(fm
 
     override fun createFragment(position: Int): Fragment {
         // Return a NEW fragment instance in createFragment(int)
-        val fragment = fragmentsList[position]
-
-        return fragment
+        return when (position) {
+            0 -> ChatsFragment()
+            1 -> ContactsFragment()
+            2 -> NearMeFragment()
+            3 -> SettingsFragment()
+            else -> SettingsFragment()
+        }
     }
 }

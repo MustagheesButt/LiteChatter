@@ -5,7 +5,8 @@
     tools:context=".screens.near_me.NearMeFragment">
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:id="@+id/nearMeFragmentContainer">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/near_me_recycler_view"
