@@ -46,7 +46,13 @@ class ContactsFragment : Fragment() {
 
         viewModel.users.observe(viewLifecycleOwner, Observer {
             Timber.i("users livedata updated: $it")
-            it?.let {
+
+            if (it.isEmpty())
+                binding.contactsEmptyMsg.visibility = View.VISIBLE
+            else
+                binding.contactsEmptyMsg.visibility = View.GONE
+
+            it.let {
                 contactsAdapter.submitList(it)
             }
         })

@@ -1,6 +1,7 @@
 package com.example.litechatter.screens.chats
 
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,14 +12,15 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.litechatter.R
+import com.example.litechatter.database.ChatItem
 import com.example.litechatter.databinding.FragmentChatsBinding
+import timber.log.Timber
 
 class ChatsFragment : Fragment() {
     private lateinit var chatsRecycler: RecyclerView
-    private lateinit var chatsAdapter: RecyclerView.Adapter<*>
     private lateinit var chatsManager: RecyclerView.LayoutManager
 
-    private val chatsDataSet: Array<String> = arrayOf("John Doe", "Omar", "Mr. X")
+    private val chatsDataSet: MutableList<ChatItem> = mutableListOf(ChatItem("1", "Musab Khan", "You: How are you???"))
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,13 +30,21 @@ class ChatsFragment : Fragment() {
             R.layout.fragment_chats, container, false)
 
         chatsManager = LinearLayoutManager(this.context)
-        chatsAdapter = ChatsAdapter(chatsDataSet)
+        val chatsAdapter = ChatsAdapter(ChatsListener {
+            Timber.i("chatitem clicked")
+
+            val intent = Intent(context, FullChatActivity::class.java).apply {
+                putExtra("123", "123")
+            }
+            startActivity(intent)
+
+        })
+
+        chatsAdapter.submitList(chatsDataSet)
 
         chatsRecycler = binding.chatsRecyclerView.apply {
             setHasFixedSize(true)
-
             layoutManager = chatsManager
-
             adapter = chatsAdapter
         }
 
@@ -42,35 +52,3 @@ class ChatsFragment : Fragment() {
         return binding.root
     }
 }
-
-class ChatsAdapter(private val myDataset: Array<String>): RecyclerView.Adapter<ChatsAdapter.MyViewHolder>() {
-
-    // Provide a reference to the views for each data item
-    // Complex data items may need more than one view per item, and
-    // you provide access to all the views for a data item in a view holder.
-    // Each data item is just a string in this case that is shown in a TextView.
-    class MyViewHolder(val view: View): RecyclerView.ViewHolder(view)
-
-
-    // Create new views (invoked by the layout manager)
-    override fun onCreateViewHolder(parent: ViewGroup,
-                                    viewType: Int): MyViewHolder {
-        // create a new view
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.chats_listitem_view, parent, false)
-        // set the view's size, margins, paddings and layout parameters
-
-        return MyViewHolder(view)
-    }
-
-    // Replace the contents of a view (invoked by the layout manager)
-    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
-        holder.view.findViewById<TextView>(R.id.userName).text = myDataset[position]
-    }
-
-    // Return the size of your dataset (invoked by the layout manager)
-    override fun getItemCount() = myDataset.size
-}
-

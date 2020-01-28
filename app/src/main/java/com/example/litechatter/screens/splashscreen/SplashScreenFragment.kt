@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.example.litechatter.R
 import com.example.litechatter.databinding.FragmentSplashScreenBinding
-import com.example.litechatter.showSnackbar
+import com.example.litechatter.helpers.showSnackbar
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.IdpResponse
@@ -80,7 +80,11 @@ class SplashScreenFragment : Fragment() {
 
                 // check if user is newly registered
                 if (response!!.isNewUser) {
-                    showSnackbar(activity!!.findViewById(R.id.splashScreenContainer), "Newly registered user")
+                    showSnackbar(
+                        activity!!.findViewById(
+                            R.id.splashScreenContainer
+                        ), "Newly registered user"
+                    )
 
                     val db = FirebaseFirestore.getInstance()
                     val userMap = hashMapOf(
@@ -103,7 +107,11 @@ class SplashScreenFragment : Fragment() {
                 viewModel.onSigninSuccessfull()
             } else { // Sign in failed
                 if (response == null) { // User pressed back button
-                    showSnackbar(activity!!.findViewById(R.id.splashScreenContainer),"Sign-in cancelled")
+                    showSnackbar(
+                        activity!!.findViewById(
+                            R.id.splashScreenContainer
+                        ), "Sign-in cancelled"
+                    )
                     return
                 }
                 if (response.error!!.errorCode == ErrorCodes.NO_NETWORK) {

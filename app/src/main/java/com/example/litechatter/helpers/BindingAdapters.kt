@@ -1,10 +1,11 @@
-package com.example.litechatter
+package com.example.litechatter.helpers
 
 import android.widget.ImageView
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.example.litechatter.R
 
 @BindingAdapter("imgUrl")
 fun bindImage(imgView: ImageView, imgUrl: String?) {

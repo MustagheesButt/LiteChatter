@@ -14,8 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 import com.example.litechatter.R
 import com.example.litechatter.databinding.FragmentNearMeBinding
-import com.example.litechatter.showSnackbar
-import timber.log.Timber
+import com.example.litechatter.helpers.showSnackbar
 
 class NearMeFragment : Fragment() {
 
@@ -53,9 +52,15 @@ class NearMeFragment : Fragment() {
 
         viewModel.showAddedToContactsMsg.observe(this, Observer {
             if (it == true) {
-                showSnackbar(binding.nearMeFragmentContainer, "Contacts updated!")
+                showSnackbar(
+                    binding.nearMeFragmentContainer,
+                    "Contacts updated!"
+                )
             } else if (it == false) {
-                showSnackbar(binding.nearMeFragmentContainer, "Could not add to contacts :(")
+                showSnackbar(
+                    binding.nearMeFragmentContainer,
+                    "Could not add to contacts :("
+                )
             }
         })
 

@@ -1,4 +1,4 @@
-package com.example.litechatter
+package com.example.litechatter.helpers
 
 import android.view.View
 import com.google.android.material.snackbar.Snackbar
