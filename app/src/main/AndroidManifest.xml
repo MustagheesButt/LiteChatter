@@ -12,7 +12,9 @@
         android:roundIcon="@mipmap/litechatter_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Design.Light.NoActionBar">
-        <activity android:name=".screens.chats.FullChatActivity"></activity>
+        <activity
+            android:name=".screens.chatroom.PrivateChatRoomActivity"
+            android:theme="@style/Theme.AppCompat.Light" />
         <activity android:name=".AuthenticationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

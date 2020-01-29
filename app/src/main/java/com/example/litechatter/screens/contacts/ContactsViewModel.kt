@@ -3,6 +3,7 @@ package com.example.litechatter.screens.contacts
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.litechatter.database.Contact
 import com.example.litechatter.database.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
@@ -14,9 +15,9 @@ class ContactsViewModel: ViewModel() {
     private var db: FirebaseFirestore = FirebaseFirestore.getInstance()
     private var userCollection: CollectionReference
 
-    private val _users = MutableLiveData<List<User>>()
-    val users: LiveData<List<User>>
-        get() = _users
+    private val _contacts = MutableLiveData<List<Contact>>()
+    val contacts: LiveData<List<Contact>>
+        get() = _contacts
 
     init {
         userCollection = db.collection("Users")
@@ -33,37 +34,34 @@ class ContactsViewModel: ViewModel() {
             if (snapshot != null && snapshot.exists()) {
                 Timber.d("Current data: ${snapshot.data}")
 
-                val contactIds = snapshot["contacts"] as List<String>?
+                val contactIds = snapshot["contacts"] as HashMap<String, String>?
 
-                loadContacts(contactIds)
+                if (contactIds.isNullOrEmpty()) {
+                    _contacts.value = listOf()
+                } else {
+                    loadContacts(contactIds)
+                }
             } else {
                 Timber.d("Current data: null")
             }
         }
     }
 
-    private fun loadContacts(contactIds: List<String>?) {
-
-        if ((contactIds == null) or contactIds!!.isEmpty()) {
-            _users.value = listOf()
-            return
-        }
-
-        var userList = mutableListOf<User>()
+    fun loadContacts(contactIds: HashMap<String, String>) {
+        val contacts = mutableListOf<Contact>()
 
         for (contactId in contactIds) {
-            userCollection.document(contactId)
+            userCollection.document(contactId.key)
                 .get()
-                .addOnSuccessListener { userData ->
-                    val ud = userData.data!!
-                    val user = User(userData.id, ud["userName"].toString())
+                .addOnSuccessListener { userSnapshot->
+                    val user = userSnapshot.toObject(User::class.java)
+                    val contact = Contact(user!!, contactId.value)
+                    contacts.add(contact)
 
-                    Timber.i("fetched contact: ${user.userName}")
-                    userList.add(user)
-                    _users.value = userList.toList()
+                    _contacts.value = contacts.toList()
                 }
-                .addOnFailureListener { exception ->
-                    Timber.w("Error getting documents.", exception)
+                .addOnFailureListener {
+                    Timber.d("Something went wrong while fetching contact: ${it.message}")
                 }
         }
     }

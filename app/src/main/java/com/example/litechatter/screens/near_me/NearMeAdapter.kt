@@ -43,7 +43,7 @@ class NearMeAdapter(val clickListener: NearMeListener): ListAdapter<User, NearMe
 
 class UserDiffCallback : DiffUtil.ItemCallback<User>() {
     override fun areItemsTheSame(oldItem: User, newItem: User): Boolean {
-        return oldItem.userId == newItem.userId
+        return oldItem.id == newItem.id
     }
 
     override fun areContentsTheSame(oldItem: User, newItem: User): Boolean {
@@ -52,5 +52,5 @@ class UserDiffCallback : DiffUtil.ItemCallback<User>() {
 }
 
 class NearMeListener(val clickHandler: (userId: String) -> Unit) {
-    fun onClick(user: User) = clickHandler(user.userId)
+    fun onClick(user: User) = clickHandler(user.id!!)
 }

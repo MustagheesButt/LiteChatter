@@ -56,11 +56,13 @@ class NearMeFragment : Fragment() {
                     binding.nearMeFragmentContainer,
                     "Contacts updated!"
                 )
+                viewModel.onShownAddedToContactsMsg()
             } else if (it == false) {
                 showSnackbar(
                     binding.nearMeFragmentContainer,
                     "Could not add to contacts :("
                 )
+                viewModel.onShownAddedToContactsMsg()
             }
         })
 

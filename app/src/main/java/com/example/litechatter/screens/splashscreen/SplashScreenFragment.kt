@@ -108,17 +108,22 @@ class SplashScreenFragment : Fragment() {
             } else { // Sign in failed
                 if (response == null) { // User pressed back button
                     showSnackbar(
-                        activity!!.findViewById(
-                            R.id.splashScreenContainer
-                        ), "Sign-in cancelled"
+                        activity!!.findViewById(R.id.splashScreenContainer),
+                        "Sign-in cancelled"
                     )
                     return
                 }
                 if (response.error!!.errorCode == ErrorCodes.NO_NETWORK) {
-                    Snackbar.make(activity!!.findViewById(R.id.splashScreenContainer), "No internet connection", Snackbar.LENGTH_SHORT).show()
+                    showSnackbar(
+                        activity!!.findViewById(R.id.splashScreenContainer),
+                        "No internet connection"
+                    )
                     return
                 }
-                Snackbar.make(activity!!.findViewById(R.id.splashScreenContainer), "Unknown error", Snackbar.LENGTH_SHORT).show()
+                showSnackbar(
+                    activity!!.findViewById(R.id.splashScreenContainer),
+                    "Unknown error"
+                )
                 Timber.e("Sign-in error: ", response.error)
             }
         }

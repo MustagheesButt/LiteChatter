@@ -3,14 +3,18 @@ package com.example.litechatter.screens.near_me
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.litechatter.database.PrivateChatRoom
 import com.example.litechatter.database.User
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import timber.log.Timber
 
 
 class NearMeViewModel: ViewModel() {
+    private val db = FirebaseFirestore.getInstance()
+    private val usersCollectionRef = db.collection("Users")
+    private val privateChatRoomCollectionRef = db.collection("PrivateChatRooms")
+
     private val _users = MutableLiveData<List<User>>()
     val users: LiveData<List<User>>
         get() = _users
@@ -24,10 +28,10 @@ class NearMeViewModel: ViewModel() {
     }
 
     init {
-        val db = FirebaseFirestore.getInstance()
         val currentUser = FirebaseAuth.getInstance().currentUser
 
-        db.collection("Users")
+        // fetching all users to display in list except currentUser
+        usersCollectionRef
             .get()
             .addOnSuccessListener { result ->
                 val userList = mutableListOf<User>()
@@ -37,7 +41,8 @@ class NearMeViewModel: ViewModel() {
 
                     if (document.id != currentUser!!.uid) {
                         val d = document.data
-                        val user = User(document.id, d["userName"].toString())
+                        val user = User(document.id, d["userName"].toString(), null)
+
                         userList.add(user)
                     }
                 }
@@ -47,20 +52,33 @@ class NearMeViewModel: ViewModel() {
             .addOnFailureListener { exception ->
                 Timber.w("Error getting documents.", exception)
             }
-
     }
 
     fun addToContacts(userId: String) {
-        val db = FirebaseFirestore.getInstance()
         val currentUser = FirebaseAuth.getInstance().currentUser
 
-        val userRef = db.collection("Users").document(currentUser!!.uid)
-        userRef.update("contacts", FieldValue.arrayUnion(userId))
-            .addOnSuccessListener {
-                _showAddedToContactsMsg.value = true
+        // first create a chatroom for currentUser and this new, to be added, contact
+        val newChatRoom = PrivateChatRoom(
+            currentUser!!.uid,
+            userId
+        )
+        privateChatRoomCollectionRef
+            .add(newChatRoom)
+            .addOnSuccessListener { documentReference ->
+                val newChatRoomId = documentReference.id
+
+                // now add the contact as => 'new contact's id' : 'chatroom id with that user '
+                val userRef = usersCollectionRef.document(currentUser.uid)
+                userRef.update("contacts.${userId}", newChatRoomId)
+                    .addOnSuccessListener {
+                        _showAddedToContactsMsg.value = true
+                    }
+                    .addOnFailureListener {
+                        _showAddedToContactsMsg.value = false
+                    }
             }
             .addOnFailureListener {
-                _showAddedToContactsMsg.value = false
+                Timber.d("Could not add chatroom")
             }
 
     }

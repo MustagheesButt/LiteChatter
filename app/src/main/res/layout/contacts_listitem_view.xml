@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="user"
-            type="com.example.litechatter.database.User" />
+            name="contact"
+            type="com.example.litechatter.database.Contact" />
 
         <variable
             name="clickListener"
@@ -16,7 +16,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="@{ () -> clickListener.onClick(user) }">
+        android:onClick="@{ () -> clickListener.onClick(contact) }">
 
         <!-- Heading: Name of user -->
         <TextView
@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:text="@{user.userName}"
+            android:text="@{contact.user.userName}"
             android:textColor="@android:color/black"
             android:textSize="20sp"
             app:layout_constraintEnd_toStartOf="@+id/arrowSymbol"

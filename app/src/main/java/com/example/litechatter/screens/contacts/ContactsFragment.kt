@@ -1,21 +1,21 @@
 package com.example.litechatter.screens.contacts
 
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.litechatter.screens.chatroom.PrivateChatRoomActivity
 
 import com.example.litechatter.R
 import com.example.litechatter.databinding.FragmentContactsBinding
-import com.example.litechatter.databinding.FragmentNearMeBinding
 import timber.log.Timber
 
 class ContactsFragment : Fragment() {
@@ -34,8 +34,12 @@ class ContactsFragment : Fragment() {
         val viewModel = ViewModelProviders.of(this).get(ContactsViewModel::class.java)
 
         contactsManager = LinearLayoutManager(this.context)
-        val contactsAdapter = ContactsAdapter(ContactsListener {
-            Timber.i("contact item clicked")
+
+        val contactsAdapter = ContactsAdapter(ContactsListener {chatRoomId ->
+            val intent = Intent(context, PrivateChatRoomActivity::class.java).apply {
+                putExtra("chatRoomId", chatRoomId)
+            }
+            startActivity(intent)
         })
 
         contactsRecycler = binding.contactsRecyclerView.apply {
@@ -44,7 +48,7 @@ class ContactsFragment : Fragment() {
             adapter = contactsAdapter
         }
 
-        viewModel.users.observe(viewLifecycleOwner, Observer {
+        viewModel.contacts.observe(viewLifecycleOwner, Observer {
             Timber.i("users livedata updated: $it")
 
             if (it.isEmpty())

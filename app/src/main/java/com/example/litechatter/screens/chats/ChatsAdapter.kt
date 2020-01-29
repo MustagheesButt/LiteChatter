@@ -45,7 +45,7 @@ class ChatsAdapter(val clickListener: ChatsListener): ListAdapter<ChatItem, Chat
 
 class ChatsDiffCallback : DiffUtil.ItemCallback<ChatItem>() {
     override fun areItemsTheSame(oldItem: ChatItem, newItem: ChatItem): Boolean {
-        return oldItem.chatId == newItem.chatId
+        return oldItem.chatRoomId == newItem.chatRoomId
     }
 
     override fun areContentsTheSame(oldItem: ChatItem, newItem: ChatItem): Boolean {

@@ -1,7 +1,7 @@
 package com.example.litechatter.database
 
 data class ChatItem (
-    var chatId: String,
-    var chatWith: String,
+    var chatRoomId: String,
+    var chatWith: User,
     var lastMessage: String
 )

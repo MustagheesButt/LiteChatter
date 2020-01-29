@@ -7,10 +7,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.litechatter.database.User
+import com.example.litechatter.database.Contact
 import com.example.litechatter.databinding.ContactsListitemViewBinding
 
-class ContactsAdapter(val clickListener: ContactsListener): ListAdapter<User, ContactsAdapter.ViewHolder>(UserDiffCallback()) {
+class ContactsAdapter(val clickListener: ContactsListener): ListAdapter<Contact, ContactsAdapter.ViewHolder>(UserDiffCallback()) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
@@ -24,8 +24,8 @@ class ContactsAdapter(val clickListener: ContactsListener): ListAdapter<User, Co
     class ViewHolder private constructor (val binding: ContactsListitemViewBinding): RecyclerView.ViewHolder(binding.root) {
         private val res = itemView.resources
 
-        fun bind(item: User, clickListener: ContactsListener) {
-            binding.user = item
+        fun bind(item: Contact, clickListener: ContactsListener) {
+            binding.contact = item
             binding.clickListener = clickListener
             binding.executePendingBindings()
         }
@@ -41,16 +41,16 @@ class ContactsAdapter(val clickListener: ContactsListener): ListAdapter<User, Co
     }
 }
 
-class UserDiffCallback : DiffUtil.ItemCallback<User>() {
-    override fun areItemsTheSame(oldItem: User, newItem: User): Boolean {
-        return oldItem.userId == newItem.userId
+class UserDiffCallback : DiffUtil.ItemCallback<Contact>() {
+    override fun areItemsTheSame(oldItem: Contact, newItem: Contact): Boolean {
+        return oldItem.user.id == newItem.user.id
     }
 
-    override fun areContentsTheSame(oldItem: User, newItem: User): Boolean {
+    override fun areContentsTheSame(oldItem: Contact, newItem: Contact): Boolean {
         return oldItem == newItem
     }
 }
 
-class ContactsListener(val clickHandler: (userId: String) -> Unit) {
-    fun onClick(user: User) = clickHandler(user.userId)
+class ContactsListener(val clickHandler: (chatRoomId: String) -> Unit) {
+    fun onClick(contact: Contact) = clickHandler(contact.privateChatRoomId)
 }
