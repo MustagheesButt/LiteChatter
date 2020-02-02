@@ -1,7 +1,7 @@
 package com.example.litechatter.database
 
 data class PrivateChatRoom (
-    val user1: String,
-    val user2: String,
-    val messages: List<ChatMessage> = listOf()
+    val user1: String? = null,
+    val user2: String? = null,
+    val messages: List<ChatMessage>? = listOf()
 )
