@@ -3,15 +3,19 @@ package com.example.litechatter.screens.chatroom
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.litechatter.database.ChatMessage
 import com.example.litechatter.database.PrivateChatRoom
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import timber.log.Timber
 
 class ChatRoomViewModel(chatRoomId: String) : ViewModel() {
     val currentUser = FirebaseAuth.getInstance().currentUser
+
     private val db = FirebaseFirestore.getInstance()
     private val privateChatRoomsCollection = db.collection("PrivateChatRooms")
+    private val currentChatRoomRef = privateChatRoomsCollection.document(chatRoomId)
 
     private val _privateChatRoom = MutableLiveData<PrivateChatRoom>()
     val privateChatRoom : LiveData<PrivateChatRoom>
@@ -20,9 +24,7 @@ class ChatRoomViewModel(chatRoomId: String) : ViewModel() {
     init {
         Timber.i("initialized with: $chatRoomId")
 
-        val currentChatRoom = privateChatRoomsCollection.document(chatRoomId)
-
-        currentChatRoom.addSnapshotListener { snapshot, e ->
+        currentChatRoomRef.addSnapshotListener { snapshot, e ->
             if (e != null) {
                 Timber.e("Listen failed", e)
                 return@addSnapshotListener
@@ -36,5 +38,9 @@ class ChatRoomViewModel(chatRoomId: String) : ViewModel() {
                 Timber.d("Current data: null")
             }
         }
+    }
+
+    fun sendChatMessage(msg: ChatMessage) {
+        currentChatRoomRef.update("messages", FieldValue.arrayUnion(msg))
     }
 }

@@ -49,9 +49,11 @@ class PrivateChatRoomActivity : AppCompatActivity() {
 
         binding.sendMsgBtn.setOnClickListener {
             val msg = ChatMessage(
-                viewModel.currentUser?.displayName!!,
+                if (viewModel.currentUser?.uid == viewModel.privateChatRoom.value?.user1) "user2" else "user1",
                 binding.msgTextBox.text.toString()
             )
+
+            viewModel.sendChatMessage(msg)
 
             binding.msgTextBox.setText("")
         }
