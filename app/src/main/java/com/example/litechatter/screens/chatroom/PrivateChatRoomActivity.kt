@@ -32,17 +32,18 @@ class PrivateChatRoomActivity : AppCompatActivity() {
         }
 
         viewModel.privateChatRoom.observe(this, Observer {privateChatRoom ->
-            if (privateChatRoom.user1 == viewModel.currentUser?.uid) {
-                supportActionBar?.let {
-                    title = privateChatRoom.user2
-                }
-            } else {
-                supportActionBar?.let {
-                    title = privateChatRoom.user1
-                }
-            }
-
             privateChatRoomAdapter.submitList(privateChatRoom.messages)
+
+            if (privateChatRoom.user1 == viewModel.currentUser?.uid)
+                viewModel.getUserById(privateChatRoom.user2!!)
+            else
+                viewModel.getUserById(privateChatRoom.user1!!)
+        })
+
+        viewModel.user.observe(this, Observer { idAndUser ->
+            supportActionBar?.let {
+                title = idAndUser.second.userName
+            }
         })
 
         binding.privateChatRoomRV.adapter = privateChatRoomAdapter
@@ -58,4 +59,6 @@ class PrivateChatRoomActivity : AppCompatActivity() {
             binding.msgTextBox.setText("")
         }
     }
+
+
 }
